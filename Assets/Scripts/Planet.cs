@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Planet {
 
     public Vector2 Position { get; private set; }
     public bool IsVisited { get; private set; } = false;
     public List<KeyValuePair<InventoryItem, ItemType>> InventoryItemsPurchasable { get; private set; }
     public List<KeyValuePair<InventoryItem, ItemType>> InventoryItemsSellable { get; private set; }
-    [SerializeField]
     InventoryItemsDistributor inventoryItemsDistributor;
 
     public Planet(Vector2 position, bool startingLocation, InventoryItemsDistributor distributor) {

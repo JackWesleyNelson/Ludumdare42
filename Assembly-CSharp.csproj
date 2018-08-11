@@ -60,11 +60,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\CameraFollow2D.cs" />
     <Compile Include="Assets\Scripts\InventoryItem.cs" />
     <Compile Include="Assets\Scripts\InventoryItemsDistributor.cs" />
     <Compile Include="Assets\Scripts\ItemQuality.cs" />
     <Compile Include="Assets\Scripts\ItemType.cs" />
     <Compile Include="Assets\Scripts\Planet.cs" />
+    <Compile Include="Assets\Scripts\PlanetGenerator.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\InventoryItemList.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\ShipItemList.cs" />
     <Compile Include="Assets\Scripts\Ship.cs" />
