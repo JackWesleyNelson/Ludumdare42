@@ -61,10 +61,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\CreateInventoryItemList.cs" />
     <Compile Include="Assets\Scripts\InventoryItem.cs" />
     <Compile Include="Assets\Scripts\ItemQuality.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\InventoryItemList.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\ShipItemList.cs" />
     <Compile Include="Assets\Scripts\ShipItem.cs" />
     <None Include="Assets\Ideas.txt" />
     <Reference Include="UnityEditor.StandardEvents">

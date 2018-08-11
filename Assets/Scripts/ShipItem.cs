@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class ShipItem : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    string partName = null;
+    int speedBonus = 0;
+    int fuelCapacityBonus = 0;
 }
