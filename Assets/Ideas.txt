@@ -4,3 +4,4 @@ Fuel containers and engines can be purchased to increase the number of planets t
 Unit of time passes, and fuel decreases each time you choose a new destination.
 Upgrade/Refuel stations exist scattered through the system and are the only way of modifying the ship or refueling the ship.
 You can choose between several options of cargo to transport given you have enough credits to purchase the cargo and the room to store it.
+The cargo will be tied to a destination planet with a decreasing reward the longer it takes to transport it.

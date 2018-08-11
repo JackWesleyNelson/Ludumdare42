@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147b93926ece08d4b93c26fe87d6e9c0, type: 3}
+  m_Name: AllShipItems
+  m_EditorClassIdentifier: 
+  shipItemList:
+  - partName: Engine 001
+    speedBonus: 10
+    space: 2
+    fuelCapacityBonus: 0
+    fuelConsumptionRate: 5
+    price: 0
+  - partName: Engine 002
+    speedBonus: 15
+    space: 1
+    fuelCapacityBonus: 0
+    fuelConsumptionRate: 3
+    price: 2000
+  - partName: Engine 003
+    speedBonus: 30
+    space: 4
+    fuelCapacityBonus: 0
+    fuelConsumptionRate: 10
+    price: 4000
+  - partName: Fuel Tank 001
+    speedBonus: 0
+    space: 2
+    fuelCapacityBonus: 20
+    fuelConsumptionRate: 0
+    price: 0
+  - partName: Fuel Tank 002
+    speedBonus: 0
+    space: 2
+    fuelCapacityBonus: 30
+    fuelConsumptionRate: 0
+    price: 1500
+  - partName: Fuel Tank 003
+    speedBonus: 0
+    space: 4
+    fuelCapacityBonus: 80
+    fuelConsumptionRate: 0
+    price: 6000

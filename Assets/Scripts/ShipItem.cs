@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipItem : MonoBehaviour {
+[System.Serializable]
+public class ShipItem {
 
-    string partName = null;
-    int speedBonus = 0;
-    int fuelCapacityBonus = 0;
+    public string partName = null;
+    public int speedBonus = 0;
+    public int space = 0;
+    public int fuelCapacityBonus = 0;
+    public float fuelConsumptionRate = 0.0f;
+    public int price = 0;
+
 }
