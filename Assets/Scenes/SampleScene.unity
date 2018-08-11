@@ -264,6 +264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShipItemsCatalogueSerializable: {fileID: 11400000, guid: ca644dc266a6678469fd4464aae79809,
     type: 2}
+  ShipItemSize: 0
 --- !u!4 &1490072487
 Transform:
   m_ObjectHideFlags: 0

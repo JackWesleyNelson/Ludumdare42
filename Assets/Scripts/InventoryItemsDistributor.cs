@@ -24,7 +24,7 @@ public class InventoryItemsDistributor : MonoBehaviour {
 
     }
 
-    public List<KeyValuePair<InventoryItem, ItemType>> GenerateItemList(int size = 3){
+    public List<KeyValuePair<InventoryItem, ItemType>> GenerateItemList(int size = 5){
         List<KeyValuePair<InventoryItem, ItemType>> items = new List<KeyValuePair<InventoryItem, ItemType>>();
         for (int i = 0; i < size; i++) {
             //Get a random item collection type index
