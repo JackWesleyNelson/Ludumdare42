@@ -78,6 +78,7 @@ public class Ship : MonoBehaviour {
     public void FixedUpdate() {
         
         if (!isMoving) {
+            transform.right = (orbitCenter - transform.position) * -1;
             transform.RotateAround(orbitCenter, Vector3.forward, orbitSpeed);
             PlanetIndex = newPlanetIndex;
         }
@@ -86,10 +87,8 @@ public class Ship : MonoBehaviour {
                 isMoving = false;
             }
             transform.position = Vector3.MoveTowards(transform.position, orbitCenter + new Vector3(orbitRadius, 0, 0), orbitSpeed *2 * Time.deltaTime);
+            transform.up = orbitCenter - transform.position;
         }
-        //Quaternion rotation = Quaternion.LookRotation(orbitCenter - transform.position, transform.TransformDirection(Vector3.up));
-        //transform.rotation = new Quaternion(0, 0, rotation.z, rotation.w);
-        transform.up = orbitCenter - transform.position;
     }
 
     public void MoveShip(Planet p) {
