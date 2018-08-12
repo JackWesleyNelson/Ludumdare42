@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Ship : MonoBehaviour {
+    public Ship Instance { get; private set; }
     public List<ShipItem> ShipItems { get; private set; }
     public List<ShipItem> ShipItemsCatalogue { get; private set; }
     [SerializeField]
@@ -19,6 +20,13 @@ public class Ship : MonoBehaviour {
     public int Currency { get; private set; } = 500;
 
     public void Start() {
+        if(Instance == null) {
+            Instance = this;
+        }
+        if(this != Instance) {
+            Destroy(this.gameObject);
+        }
+
         ShipItems = new List<ShipItem>();
         ShipItemsCatalogue = new List<ShipItem>(ShipItemsCatalogueSerializable.shipItemList);
         //Add all the zero cost default items from the catalogue to the ship, and add them to the ship
@@ -38,6 +46,12 @@ public class Ship : MonoBehaviour {
         }
         ShipItemSize = ShipItemSizeMax;
         Fuel = FuelMax;
+    }
+
+    public void Update() {
+        if (Input.GetMouseButtonDown(0)) {
+            
+        }
     }
 
     public void MoveShip(Planet p) {
