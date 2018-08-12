@@ -74,7 +74,6 @@
     <Compile Include="Assets\Scripts\ScriptableObjects\ShipItemList.cs" />
     <Compile Include="Assets\Scripts\Ship.cs" />
     <Compile Include="Assets\Scripts\ShipItem.cs" />
-    <Compile Include="Assets\Scripts\Singleton.cs" />
     <Compile Include="Assets\Scripts\UpdateUI.cs" />
     <None Include="Assets\3rdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\3rdParty\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
