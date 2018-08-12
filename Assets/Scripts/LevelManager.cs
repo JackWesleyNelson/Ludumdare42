@@ -21,11 +21,6 @@ public class LevelManager : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void Restart() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        updateUI.StartGame();
-    }
-
     public void ExitGame() {
         Application.Quit();
     }

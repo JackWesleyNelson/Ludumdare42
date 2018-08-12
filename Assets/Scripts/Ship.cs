@@ -120,7 +120,6 @@ public class Ship : MonoBehaviour {
 
     public bool MoveShip(Planet p) {
         Vector2 pos = orbitCenter;
-        Vector2 dir = p.Position - pos;
         float dis = Vector2.Distance(pos, p.Position);
         float timeToTravel = dis / Speed;
         float fuelNeeded = FuelConsumption * timeToTravel;
