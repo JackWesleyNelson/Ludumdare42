@@ -167,7 +167,7 @@ public class UpdateUI : MonoBehaviour {
             int credits = (int)((int)item.Key.quality * sellMult);
             if (ship.RemoveInventoryItem(item)) {
                 ship.AddCredits(credits);
-                consoleText.text = "You purchased (" + item.Key.itemName + ") for " + credits + "!";
+                consoleText.text = "You sold (" + item.Key.itemName + ") for " + credits + "!";
                 p.RemoveAndReplaceItem(index, p.InventoryItemsSellable);
             }
             else {
