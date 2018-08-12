@@ -23,6 +23,8 @@ public class UpdateUI : MonoBehaviour {
     [SerializeField]
     private TextMeshProUGUI startScreenButtonText;
     [SerializeField]
+    private Transform startScreenMainMenuButton;
+    [SerializeField]
     private TextMeshProUGUI gameOverScoreText;
     [SerializeField]
     private TextMeshProUGUI creditsText;
@@ -187,6 +189,7 @@ public class UpdateUI : MonoBehaviour {
         startScreen.gameObject.SetActive(false);
         startScreenButtonText.text = "Resume";
         Paused = !Paused;
+        startScreenMainMenuButton.gameObject.SetActive(true);
     }
 
 }
