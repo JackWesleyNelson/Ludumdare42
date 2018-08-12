@@ -14,37 +14,37 @@ MonoBehaviour:
   shipItemList:
   - partName: Engine 001
     speedBonus: 10
-    space: 2
+    size: 1
     fuelCapacityBonus: 0
     fuelConsumptionRate: 5
     price: 0
   - partName: Engine 002
     speedBonus: 15
-    space: 1
+    size: 1
     fuelCapacityBonus: 0
     fuelConsumptionRate: 3
     price: 2000
   - partName: Engine 003
     speedBonus: 30
-    space: 4
+    size: 1
     fuelCapacityBonus: 0
     fuelConsumptionRate: 10
     price: 4000
   - partName: Fuel Tank 001
     speedBonus: 0
-    space: 2
+    size: 1
     fuelCapacityBonus: 20
     fuelConsumptionRate: 0
     price: 0
   - partName: Fuel Tank 002
     speedBonus: 0
-    space: 2
+    size: 1
     fuelCapacityBonus: 30
     fuelConsumptionRate: 0
     price: 1500
   - partName: Fuel Tank 003
     speedBonus: 0
-    space: 4
+    size: 1
     fuelCapacityBonus: 80
     fuelConsumptionRate: 0
     price: 6000

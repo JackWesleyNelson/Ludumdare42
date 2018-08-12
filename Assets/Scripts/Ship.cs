@@ -29,7 +29,7 @@ public class Ship : MonoBehaviour {
     public float FuelConsumption { get; private set; } = 0.0f;
     public int Speed { get; private set; }
     public int ShipItemSize = 0;
-    public int ShipItemSizeMax { get; private set; }
+    public int ShipItemSizeMax { get; private set; } = 5;
     public float GameTime { get; private set; } = 0;
     public int Credits { get; private set; } = 500;    
 
@@ -55,12 +55,11 @@ public class Ship : MonoBehaviour {
         }
         //Initialize the stats of the ship based on the assigned parts.
         foreach(ShipItem shipItem in ShipItems) {
-            ShipItemSizeMax += shipItem.size;
+            ShipItemSize += shipItem.size;
             FuelMax += shipItem.fuelCapacityBonus;
             FuelConsumption += shipItem.fuelConsumptionRate;
             Speed += shipItem.speedBonus;
         }
-        ShipItemSize = ShipItemSizeMax;
         Fuel = FuelMax;
         transform.position += new Vector3(orbitRadius, 0, 0);
     }
@@ -85,12 +84,12 @@ public class Ship : MonoBehaviour {
         else {
             if (Vector3.Distance(transform.position, orbitCenter) < orbitRadius + .001) {
                 isMoving = false;
-                Quaternion rot = transform.rotation;
-                rot.z = 0;
-                transform.rotation = rot;
             }
             transform.position = Vector3.MoveTowards(transform.position, orbitCenter + new Vector3(orbitRadius, 0, 0), orbitSpeed *2 * Time.deltaTime);
         }
+        //Quaternion rotation = Quaternion.LookRotation(orbitCenter - transform.position, transform.TransformDirection(Vector3.up));
+        //transform.rotation = new Quaternion(0, 0, rotation.z, rotation.w);
+        transform.up = orbitCenter - transform.position;
     }
 
     public void MoveShip(Planet p) {
@@ -116,12 +115,12 @@ public class Ship : MonoBehaviour {
         return Fuel > 0.0f;
     }
 
-    public void AddCurrency(int amount) {
+    public void AddCredits(int amount) {
         Credits += amount;
     }
 
     //Return true if the transaction completed, false otherwise.
-    public bool RemoveCurrency(int amount) {
+    public bool RemoveCredits(int amount) {
         if(Credits >= amount) {
             Credits -= amount;
             return true;
