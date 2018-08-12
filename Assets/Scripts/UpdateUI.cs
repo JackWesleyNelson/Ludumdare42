@@ -8,18 +8,30 @@ using UnityEngine.UI;
 public class UpdateUI : MonoBehaviour {
     public UpdateUI Instance { get; private set; }
 
+    public bool Paused { get; private set; } = true;
+
     [SerializeField]
     Ship ship;
     [SerializeField]
-    private TextMeshProUGUI creditsText;
+    private PlanetGenerator planetGen;
     [SerializeField]
     private Transform loadingScreen;
     [SerializeField]
-    private TextMeshProUGUI loadingText;
+    private Transform gameOverScreen;
     [SerializeField]
-    private PlanetGenerator planetGen;
+    private Transform startScreen;
+    [SerializeField]
+    private TextMeshProUGUI startScreenButtonText;
+    [SerializeField]
+    private TextMeshProUGUI gameOverScoreText;
+    [SerializeField]
+    private TextMeshProUGUI creditsText;
+    [SerializeField]
+    private TextMeshProUGUI fuelText;
     [SerializeField]
     private TextMeshProUGUI consoleText;
+    [SerializeField]
+    private TextMeshProUGUI loadingText;
     [SerializeField]
     private TextMeshProUGUI shipPartsText;
     [SerializeField]
@@ -28,6 +40,7 @@ public class UpdateUI : MonoBehaviour {
     private TextMeshProUGUI planetSellingText;
     [SerializeField]
     private TextMeshProUGUI planetBuyingText;
+
     [SerializeField]
     private List<Button> shipPartsButtons;
     [SerializeField]
@@ -55,6 +68,11 @@ public class UpdateUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (Input.GetKeyDown(KeyCode.Escape) && startScreenButtonText.text == "Resume") {
+            startScreen.gameObject.SetActive(!startScreen.gameObject.activeSelf);
+            Paused = !Paused;
+        }
+
         if (planetGen.IsSpawning) {
             if(loadingCo == null) {
                 loadingCo = StartCoroutine(LoadingTextAnimation());
@@ -66,9 +84,15 @@ public class UpdateUI : MonoBehaviour {
             StopCoroutine(loadingCo);
         }
 
+        if(ship.Fuel <= 0) {
+            gameOverScoreText.text = creditsText.text;
+            gameOverScreen.gameObject.SetActive(true);
+        }
+
         p = planetGen.GetPlanet(ship.PlanetIndex);
         creditsText.text = "Credits: " + ship.Credits;
-        
+        fuelText.text = "Fuel: " + "(" + ship.Fuel.ToString("0.00") + "/" + ship.FuelMax + ")";
+
         for(int i = 0; i < 5; i++) {
             planetBuyingButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = "";
             planetSellingButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = "";
@@ -100,7 +124,7 @@ public class UpdateUI : MonoBehaviour {
         for (int i = 0; i < p.InventoryItemsSellable.Count; i++) {
             KeyValuePair<InventoryItem, ItemType> kvp = p.InventoryItemsSellable[i];
             planetSellingButtons[i].gameObject.SetActive(true);
-            planetSellingButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = kvp.Key.itemName + "\n(" + kvp.Value + ", " + (int)kvp.Key.quality * sellMult + ")\n";
+            planetSellingButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = kvp.Key.itemName + "\n(" + kvp.Value + ", " + (int)((int)kvp.Key.quality * sellMult) + ")\n";
         }
     }
 
@@ -136,8 +160,33 @@ public class UpdateUI : MonoBehaviour {
     }
 
     public void SellItem(int index) {
-        
+        if(index < p.InventoryItemsSellable.Count) {
+            KeyValuePair<InventoryItem, ItemType> item = p.InventoryItemsSellable[index];
+            int credits = (int)((int)item.Key.quality * sellMult);
+            if (ship.RemoveInventoryItem(item)) {
+                ship.AddCredits(credits);
+                consoleText.text = "You purchased (" + item.Key.itemName + ") for " + credits + "!";
+                p.RemoveAndReplaceItem(index, p.InventoryItemsSellable);
+            }
+            else {
+                consoleText.text = "Could not sell item, item not in cargo!";
+            }
+        }
     }
 
+    public void MoveToPlanet(bool planetReached) {
+        if (!planetReached) {
+            consoleText.text = "You don't have enough fuel to reach that planet!";
+        }
+        else {
+            consoleText.text = "You've arrived at a new planet!";
+        }
+    }
+
+    public void StartGame() {
+        startScreen.gameObject.SetActive(false);
+        startScreenButtonText.text = "Resume";
+        Paused = !Paused;
+    }
 
 }

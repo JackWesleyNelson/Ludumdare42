@@ -22,8 +22,13 @@ public class Ship : MonoBehaviour {
     ShipItemList ShipItemsCatalogueSerializable;
     [SerializeField]
     LayerMask planetLayerMask;
+    [SerializeField]
+    UpdateUI updateUI;
+    [SerializeField]
+    PlanetGenerator planetGenerator;
+
     public int InventoryItemSize { get; private set; } = 0;
-    public int InventoryItemSizeMax { get; private set; } = 4;
+    public int InventoryItemSizeMax { get; private set; } = 5;
     public float Fuel { get; private set; }
     public float FuelMax { get; private set; }
     public float FuelConsumption { get; private set; } = 0.0f;
@@ -31,7 +36,7 @@ public class Ship : MonoBehaviour {
     public int ShipItemSize = 0;
     public int ShipItemSizeMax { get; private set; } = 5;
     public float GameTime { get; private set; } = 0;
-    public int Credits { get; private set; } = 500;    
+    public int Credits { get; private set; } = 800;    
 
     public void Start() {
         if(Instance == null) {
@@ -68,9 +73,29 @@ public class Ship : MonoBehaviour {
         if (Input.GetMouseButtonDown(0) && !isMoving) {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, planetLayerMask);
             if(hit.collider != null) {
-                isMoving = true;
-                orbitCenter = hit.transform.position;
-                newPlanetIndex = int.Parse(hit.collider.gameObject.name);
+                if(newPlanetIndex != int.Parse(hit.collider.gameObject.name)) {
+                    newPlanetIndex = int.Parse(hit.collider.gameObject.name);
+                    Planet p = planetGenerator.GetPlanet(newPlanetIndex);
+                    if (MoveShip(p)) {
+                        p.SetVisited();
+                        isMoving = true;
+                        orbitCenter = hit.transform.position;
+                    }
+                    else {
+                        updateUI.MoveToPlanet(false);
+                    }
+                }
+            }
+        }
+        if (!planetGenerator.IsSpawning && !updateUI.Paused) {
+            if (isMoving) {
+                Fuel -= Time.deltaTime / 4;
+            }
+            else {
+                Fuel -= Time.deltaTime / 12;
+            }
+            if(Fuel < 0) {
+                Fuel = 0;
             }
         }
     }
@@ -85,14 +110,15 @@ public class Ship : MonoBehaviour {
         else {
             if (Vector3.Distance(transform.position, orbitCenter) < orbitRadius + .001) {
                 isMoving = false;
+                updateUI.MoveToPlanet(true);
             }
             transform.position = Vector3.MoveTowards(transform.position, orbitCenter + new Vector3(orbitRadius, 0, 0), orbitSpeed *2 * Time.deltaTime);
             transform.up = orbitCenter - transform.position;
         }
     }
 
-    public void MoveShip(Planet p) {
-        Vector2 pos = transform.position;
+    public bool MoveShip(Planet p) {
+        Vector2 pos = orbitCenter;
         Vector2 dir = p.Position - pos;
         float dis = Vector2.Distance(pos, p.Position);
         float timeToTravel = dis / Speed;
@@ -100,13 +126,10 @@ public class Ship : MonoBehaviour {
         if(Fuel >= fuelNeeded) {
             Fuel -= fuelNeeded;
             GameTime += timeToTravel;
-            transform.position = new Vector3(p.Position.x, p.Position.y, transform.position.z);
+            return true;
         }
         else {
-            float percentDistanceAchieved = Fuel / fuelNeeded;
-            Fuel = 0;
-            GameTime += timeToTravel * percentDistanceAchieved;
-            transform.position += new Vector3(dir.x, dir.y, 0) * percentDistanceAchieved;
+            return false;
         }
     }
 

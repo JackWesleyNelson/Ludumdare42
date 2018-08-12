@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\InventoryItemsDistributor.cs" />
     <Compile Include="Assets\Scripts\ItemQuality.cs" />
     <Compile Include="Assets\Scripts\ItemType.cs" />
+    <Compile Include="Assets\Scripts\LevelManager.cs" />
     <Compile Include="Assets\Scripts\PackLayout.cs" />
     <Compile Include="Assets\Scripts\Planet.cs" />
     <Compile Include="Assets\Scripts\PlanetGenerator.cs" />

@@ -200,5 +200,4 @@ public class PlanetGenerator : MonoBehaviour {
     public Planet GetPlanet(int index) {
         return planets[index];
     }
-
 }
