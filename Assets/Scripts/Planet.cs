@@ -29,11 +29,11 @@ public class Planet {
         return item;
     }
 
-    public void StockItemsPurchasable() {
+    private void StockItemsPurchasable() {
         StockList(InventoryItemsPurchasable);
     }
 
-    public void StockItemsSellable() {
+    private  void StockItemsSellable() {
         StockList(InventoryItemsSellable);
     }
 
@@ -41,7 +41,7 @@ public class Planet {
         IsVisited = true;
     }
 
-    public void StockList(List<KeyValuePair<InventoryItem, ItemType>> list) {
+    private void StockList(List<KeyValuePair<InventoryItem, ItemType>> list) {
         list.Clear();
         list.AddRange(inventoryItemsDistributor.GenerateItemList());
     }

@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Ship : MonoBehaviour {
     public Ship Instance { get; private set; }
-    
+
+    public int PlanetIndex { get; private set; } = 0;
+    private int newPlanetIndex = 0;
+
     private Vector3 orbitCenter;
     private float orbitRadius = .5f;
     private float orbitSpeed = 0.5f;
@@ -13,6 +16,8 @@ public class Ship : MonoBehaviour {
 
     public List<ShipItem> ShipItems { get; private set; }
     public List<ShipItem> ShipItemsCatalogue { get; private set; }
+    public List<KeyValuePair<InventoryItem, ItemType>> InventoryItems { get; private set; }
+
     [SerializeField]
     ShipItemList ShipItemsCatalogueSerializable;
     [SerializeField]
@@ -39,6 +44,7 @@ public class Ship : MonoBehaviour {
 
         ShipItems = new List<ShipItem>();
         ShipItemsCatalogue = new List<ShipItem>(ShipItemsCatalogueSerializable.shipItemList);
+        InventoryItems = new List<KeyValuePair<InventoryItem, ItemType>>();
         //Add all the zero cost default items from the catalogue to the ship, and add them to the ship
         for(int i = ShipItemsCatalogue.Count - 1; i >= 0; i--) {
             ShipItem shipItem = ShipItemsCatalogue[i];
@@ -60,11 +66,12 @@ public class Ship : MonoBehaviour {
     }
 
     public void Update() {
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && !isMoving) {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, planetLayerMask);
             if(hit.collider != null) {
                 isMoving = true;
                 orbitCenter = hit.transform.position;
+                newPlanetIndex = int.Parse(hit.collider.gameObject.name);
             }
         }
     }
@@ -73,6 +80,7 @@ public class Ship : MonoBehaviour {
         
         if (!isMoving) {
             transform.RotateAround(orbitCenter, Vector3.forward, orbitSpeed);
+            PlanetIndex = newPlanetIndex;
         }
         else {
             if (Vector3.Distance(transform.position, orbitCenter) < orbitRadius + .001) {

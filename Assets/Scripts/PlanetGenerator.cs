@@ -43,10 +43,10 @@ public class PlanetGenerator : MonoBehaviour {
 
     private List<GameObject> planetHierarchy;
 
-
+    private List<Planet> planets;
     private Dictionary<Planet, GameObject> planetDict;
 
-    private bool isSpawning = false;
+    public bool IsSpawning { get; private set; } = false;
 
     
 
@@ -57,6 +57,7 @@ public class PlanetGenerator : MonoBehaviour {
         if(this != Instance) {
             Destroy(this.gameObject);
         }
+        planets = new List<Planet>();
         planetDict = new Dictionary<Planet, GameObject>();
         planetHierarchy = new List<GameObject>();
         validationAttempts = maxValidationAttempts;
@@ -69,13 +70,13 @@ public class PlanetGenerator : MonoBehaviour {
     }
 
     public void Update() {
-        if (!isSpawning) {
+        if (!IsSpawning) {
             ShiftHierarchyTiles(ship.transform.position);
         }
     }
 
     private void RespawnPlanets() {
-        if (isSpawning) {
+        if (IsSpawning) {
             StopAllCoroutines();
         }
         minRadiusFromPlanets = minRadiusFromPlanetsDefault;
@@ -83,6 +84,7 @@ public class PlanetGenerator : MonoBehaviour {
         planetChildGrowthRate = planetChildGrowthRateDefault;
 
         //Destroy whatever old planets existed.
+        planets.Clear();
         planetDict.Clear();
         planetHierarchy.Clear();
         //Create a hierarchy for the planets to reside.
@@ -94,7 +96,7 @@ public class PlanetGenerator : MonoBehaviour {
     }
 
     IEnumerator SpawnPlanets(Planet parent, int iterations) {
-        isSpawning = true;
+        IsSpawning = true;
         int childrenToSpawn = PlanetChildCount;
         float xBounds = WorldWidthRadius - maxSizeMult;
         float yBounds = WorldHeightRadius - maxSizeMult;
@@ -128,7 +130,7 @@ public class PlanetGenerator : MonoBehaviour {
             iterations--;
         } while (iterations > 0);
         CreateHierarchyTiles();
-        isSpawning = false;
+        IsSpawning = false;
     }
 
     private Planet CreatePlanet(Vector2 pos, bool discovered = false) {
@@ -143,6 +145,7 @@ public class PlanetGenerator : MonoBehaviour {
         newPlanet.layer = LayerMask.NameToLayer("Planet");
         newPlanet.GetComponent<MeshRenderer>().sharedMaterials = new Material[] { planetMaterials[Random.Range(0, planetMaterials.Count)] };
         planetDict.Add(p, newPlanet);
+        planets.Add(p);
         return p;
     }
 
@@ -193,4 +196,9 @@ public class PlanetGenerator : MonoBehaviour {
             g.transform.position = newPos;
         }
     }
+
+    public Planet GetPlanet(int index) {
+        return planets[index];
+    }
+
 }
