@@ -33,18 +33,18 @@ MonoBehaviour:
   - partName: Fuel Tank 001
     speedBonus: 0
     size: 1
-    fuelCapacityBonus: 60
+    fuelCapacityBonus: 90
     fuelConsumptionRate: 0
     price: 0
   - partName: Fuel Tank 002
     speedBonus: 0
     size: 1
-    fuelCapacityBonus: 90
+    fuelCapacityBonus: 135
     fuelConsumptionRate: 0
     price: 1500
   - partName: Fuel Tank 003
     speedBonus: 0
     size: 1
-    fuelCapacityBonus: 180
+    fuelCapacityBonus: 225
     fuelConsumptionRate: 0
     price: 6000
