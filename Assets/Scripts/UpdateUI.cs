@@ -19,6 +19,8 @@ public class UpdateUI : MonoBehaviour {
     [SerializeField]
     private PlanetGenerator planetGen;
     [SerializeField]
+    private TextMeshProUGUI consoleText;
+    [SerializeField]
     private TextMeshProUGUI shipPartsText;
     [SerializeField]
     private TextMeshProUGUI shipCargoText;
@@ -37,6 +39,7 @@ public class UpdateUI : MonoBehaviour {
     
     private Planet p;
 
+    private float sellMult = 2.0f;
 
     private Coroutine loadingCo;
 
@@ -97,7 +100,7 @@ public class UpdateUI : MonoBehaviour {
         for (int i = 0; i < p.InventoryItemsSellable.Count; i++) {
             KeyValuePair<InventoryItem, ItemType> kvp = p.InventoryItemsSellable[i];
             planetSellingButtons[i].gameObject.SetActive(true);
-            planetSellingButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = kvp.Key.itemName + "\n(" + kvp.Value + ", " + (int)kvp.Key.quality + ")\n";
+            planetSellingButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = kvp.Key.itemName + "\n(" + kvp.Value + ", " + (int)kvp.Key.quality * sellMult + ")\n";
         }
     }
 
@@ -115,10 +118,26 @@ public class UpdateUI : MonoBehaviour {
     public void BuyItem(int index) {
         if(index < p.InventoryItemsPurchasable.Count) {
             KeyValuePair<InventoryItem, ItemType> item = p.InventoryItemsPurchasable[index];
-            //if (ship.RemoveCredits(item))
+            int credits = (int)item.Key.quality;
+            if (ship.RemoveCredits(credits)) {
+                if (ship.AddInventoryItem(item)) {
+                    consoleText.text = "You purchased (" + item.Key.itemName + ") for " + credits + "!";
+                    p.RemoveAndReplaceItem(index, p.InventoryItemsPurchasable);
+                }
+                else {
+                    ship.AddCredits(credits);
+                    consoleText.text = "Could not purchase, not enough space in cargo!";
+                }
+            }
+            else {
+                consoleText.text = "Could not purchase, not enough credits!";
+            }
         }
     }
 
+    public void SellItem(int index) {
+        
+    }
 
 
 }

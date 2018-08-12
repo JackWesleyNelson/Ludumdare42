@@ -38,4 +38,16 @@ public class InventoryItemsDistributor : MonoBehaviour {
         }
         return items;
     }
+
+    public KeyValuePair<InventoryItem, ItemType> GenerateItem() {
+        //Get a random item collection type index
+        int collectionIndex = Random.Range(0, inventoryCollections.Count);
+        //Get a random item index from the collection
+        int itemIndex = Random.Range(0, inventoryCollections[collectionIndex].itemList.Count);
+        //Get the random item from the itemIndex from the collection at collectionIndex.
+        //Add this item to the returning list.
+        KeyValuePair<InventoryItem, ItemType> item = new KeyValuePair<InventoryItem, ItemType>(inventoryCollections[collectionIndex].itemList[itemIndex], inventoryCollectionTypes[collectionIndex]);
+        return item;
+    }
+
 }

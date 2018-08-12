@@ -45,4 +45,10 @@ public class Planet {
         list.Clear();
         list.AddRange(inventoryItemsDistributor.GenerateItemList());
     }
+
+    public void RemoveAndReplaceItem(int index, List<KeyValuePair<InventoryItem, ItemType>> list) {
+        list.RemoveAt(index);
+        list.Add(inventoryItemsDistributor.GenerateItem());
+    }
+
 }

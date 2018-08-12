@@ -127,4 +127,22 @@ public class Ship : MonoBehaviour {
         return false;
     }
 
+    public bool AddInventoryItem(KeyValuePair<InventoryItem, ItemType> item) {
+        if (InventoryItems.Count < InventoryItemSizeMax) {
+            InventoryItems.Add(item);
+            return true;
+        }
+        return false;
+    }
+
+    public bool RemoveInventoryItem(KeyValuePair<InventoryItem, ItemType> item) {
+        if (InventoryItems.Contains(item) ) {
+            InventoryItems.Remove(item);
+            return true;
+        }
+        return false;
+    }
+
+
+
 }
