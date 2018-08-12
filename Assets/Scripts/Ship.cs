@@ -74,12 +74,13 @@ public class Ship : MonoBehaviour {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, planetLayerMask);
             if(hit.collider != null) {
                 if(newPlanetIndex != int.Parse(hit.collider.gameObject.name)) {
-                    newPlanetIndex = int.Parse(hit.collider.gameObject.name);
-                    Planet p = planetGenerator.GetPlanet(newPlanetIndex);
+                    int tempPlanetIndex = int.Parse(hit.collider.gameObject.name);
+                    Planet p = planetGenerator.GetPlanet(tempPlanetIndex);
                     if (MoveShip(p)) {
                         p.SetVisited();
                         isMoving = true;
                         orbitCenter = hit.transform.position;
+                        newPlanetIndex = tempPlanetIndex;
                     }
                     else {
                         updateUI.MoveToPlanet(false);
